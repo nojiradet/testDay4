@@ -28,55 +28,55 @@ AppAsset::register($this);
             <div>
                 <img src="<?= Yii::getAlias('@web') ?>/img/avengers.jpg" class="img-responsive" alt="header" >
             </div>
-            
+
 
             <?php
             NavBar::begin([
                 'brandLabel' => '<span class="glyphicon glyphicon-leaf"></span> Web site ของฉัน',
                 'brandUrl' => Yii::$app->homeUrl,
                 'options' => [
-                    'class' => 'navbar-default',  //navbar-fixed-top
+                    'class' => 'navbar-default', //navbar-fixed-top
                 ],
             ]);
-            
-            $register=[
-               ['label' => 'ประเภทคอมพิวเตอร์', 'url' => ['/com-type']],
-               ['label' => 'สถานะคอมพิวเตอร์', 'url' => ['/comstatus']], 
+
+            $register = [
+                    ['label' => 'ประเภทคอมพิวเตอร์', 'url' => ['/com-type']],
+                    ['label' => 'สถานะคอมพิวเตอร์', 'url' => ['/comstatus']],
             ];
-            $report=[
-               ['label' => 'ประเภทคอมพิวเตอร์', 'url' => ['/reportcomtype']], 
-               ['label' => 'บริการคอมพิวเตอร์', 'url' => ['/reportcomservice']], 
+            $report = [
+                    ['label' => 'ประเภทคอมพิวเตอร์', 'url' => ['/reportcomtype']],
+                    ['label' => 'บริการคอมพิวเตอร์', 'url' => ['/reportcomservice']],
+                    ['label' => 'บริการคอมพิวเตอร์ .PDF', 'url' => ['/pdftest'], 'linkOptions' => ['target' => '_blank']],
             ];
-            
+
             echo Nav::widget([
-                'options' => ['class' => 'navbar-nav navbar-right'],
-                'encodeLabels' => false,
-                'items' => [
-                    ['label' => '<span class="glyphicon glyphicon-home"></span> หน้าแรก', 'url' => ['/site/index']],
-                    ['label' => 'ลงทะเบียน', 'items' => $register],
-                    ['label' => 'รายงาน', 'items' => $report],
-                    Yii::$app->user->isGuest ? (
-                            ['label' => 'Login', 'url' => ['/site/login']]
-                            ) : (
-                            '<li>'
-                            . Html::beginForm(['/site/logout'], 'post', ['class' => 'navbar-form'])
-                            . Html::submitButton(
-                                    'Logout (' . Yii::$app->user->identity->username . ')', ['class' => 'btn btn-link']
-                            )
-                            . Html::endForm()
-                            . '</li>'
-                            )
+            'options' => ['class' => 'navbar-nav navbar-right'],
+            'encodeLabels' => false,
+            'items' => [
+            ['label' => '<span class="glyphicon glyphicon-home"></span> หน้าแรก', 'url' => ['/site/index']],
+            ['label' => 'ลงทะเบียน', 'items' => $register,'visible'=>Yii::$app->session->has('username')],
+            ['label' => 'รายงาน', 'items' => $report,'visible'=>Yii::$app->session->get('checkadmintest')==1],
+            !Yii::$app->session->get('username') ? ( 
+                    ['label' => 'Login', 'url' => ['/site/login']]
+                    ) : ( 
+                    '<li>' 
+                    . Html::beginForm(['/site/logout'], 'post', ['class' => 'navbar-form']) 
+                    . Html::submitButton( 
+                    'Logout (' . Yii::$app->session->get('username') . ')', ['class' => 'btn btn-link'] ) 
+                    . Html::endForm() 
+                    . '</li>' 
+                    )
                 ],
             ]);
             NavBar::end();
             ?>
 
             <div class="container">
-<?=
-Breadcrumbs::widget([
-    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-])
-?>
+                <?=
+                Breadcrumbs::widget([
+                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                ])
+                ?>
                 <?= $content ?>
             </div>
         </div>

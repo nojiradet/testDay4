@@ -1,5 +1,6 @@
 <?php 
 use yii\helpers\Html;
+if(Yii::$app->session->get('checkadmintest')==1){
 ?>
 <h1>report-com-type/index</h1>
 <table class="table table-bordered table-hover table-striped">
@@ -7,7 +8,7 @@ use yii\helpers\Html;
         <tr class="success">
             <th>com_type_id</th>
             <th>com_type_name</th>
-            <th>แก้ไข</th>
+            <th>แก้ไขddddddddd</th>
         </tr>
     </thead>
     <tbody>
@@ -26,3 +27,4 @@ foreach ($data_show as $key => $value) {
 
     </tbody>
 </table>
+<?php } ?>
